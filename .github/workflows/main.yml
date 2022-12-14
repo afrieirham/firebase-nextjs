@@ -3,8 +3,6 @@ name: Firebase function deploy
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -14,14 +12,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Install npm packages
-      run: npm install
-    - name: Build project
-      run: npm run build
-    - name: Deploy to Firebase
-      uses: w9jds/firebase-action@master
-      with:
+      - uses: actions/checkout@v2
+      - name: Install npm packages
+        run: npm ci
+      - name: Build project
+        run: npm run build
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
           args: deploy --only functions,hosting
-      env:
+        env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

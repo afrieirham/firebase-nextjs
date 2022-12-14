@@ -2,7 +2,7 @@ name: Firebase function deploy
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   build:
@@ -10,9 +10,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install npm packages
-    - run: npm install
+      run: npm install
     - name: Build project
-    - run: npm run build
+      run: npm run build
     - name: Deploy to Firebase
       uses: w9jds/firebase-action@master
       with:
